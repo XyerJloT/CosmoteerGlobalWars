@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -9,13 +11,19 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
     [SerializeField] private bool _short;
 
     [SerializeField] private InputField _input;
-
-    private bool _isSelected;
+    
+    [Serializable]
+    public class ChangedEvent : UnityEvent<int> { }
+    public ChangedEvent OnChanged;
 
     public int Number
     {
         get => _number;
-        set => UpdateField(value);
+        set
+        {
+            UpdateField(value);
+            OnChanged?.Invoke(value);
+        }
     }
 
     public bool IsShort
@@ -27,6 +35,8 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
             UpdateField(_number);
         }
     }
+
+    private bool _isSelected;
 
     public void OnSelect(BaseEventData eventData)
     {
@@ -75,7 +85,6 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     private string ShortFormat(int number)
     {
-        //TODO: Ультра мега форматирование с приставками K, M и G
-        return "short " + number;
+        return new MetricPrefix(number).ToString();
     }
 }
