@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using UnityEngine.Events;
 
 public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -12,43 +14,49 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public StarModel Model { get; private set; }
 
-    private void Start()
-    {
-        _description.text = MinimalDescription();
-
-        _selection.enabled = false;
-
-        Model = new StarModel(_name, _incom);
-        Model.OnCaptured += invader => _stroke.color = invader.Color; // Отписываться не обязательно т.к. Model всегда привязан к StarView
-        Model.Capture(Team.Neutral);
-    }
+    [Serializable]
+    public class ClickHandler : UnityEvent<StarModel> { }
+    public ClickHandler OnClick;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         _selection.enabled = true;
-
         _description.text = Description();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         _selection.enabled = false;
-
         _description.text = MinimalDescription();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        //TODO: Open build menu
+        OnClick?.Invoke(Model);
+    }
+
+    private void Start()
+    {
+        _selection.enabled = false;
+        _description.text = MinimalDescription();
+
+        Model = new StarModel(_name, _incom);
+        Model.OnCaptured += HandleCapture;
+        Model.Capture(Team.Neutral);
     }
 
     private string MinimalDescription()
     {
-        return $"{_incom}$";
+        return _incom + " \u20A1";
     }
 
     private string Description()
     {
-        return $"{_name} - {_incom}$";
+        return $"{_name} - {_incom} \u20A1";
+    }
+
+    private void HandleCapture(Team invader)
+    {
+        _stroke.color = invader.Color;
     }
 }
