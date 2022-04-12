@@ -47,7 +47,8 @@ public class MenuScript : MonoBehaviourPunCallbacks
     }
 
 
-
+    public GameObject _prefab;
+    public Transform _pos;
     public void CreateRedRoom() //хост подключается к красной
     {
         nickName = nickNameField.text;
@@ -62,8 +63,8 @@ public class MenuScript : MonoBehaviourPunCallbacks
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
 
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 20;
-        PhotonNetwork.CreateRoom(createField.text, roomOptions);
+        roomOptions.MaxPlayers = 20; 
+        PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
         if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.N) && Input.GetKey(KeyCode.D)) TeamManager.playerTeam = 0; //зайти как разработчик
         else TeamManager.playerTeam = 1;
         
@@ -106,6 +107,23 @@ public class MenuScript : MonoBehaviourPunCallbacks
         TeamManager.playerTeam = 1;
     }
 
+    public void JoinRandomRoom()
+    {
+        nickName = nickNameField.text;
+        if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
+        PhotonNetwork.NickName = nickName + randomCode;
+        isAssigned = 1;
+
+
+
+        PlayerPrefs.SetString("NickName", nickName);
+        PlayerPrefs.SetString("RandomCode", randomCode);
+        PlayerPrefs.SetInt("IsAssigned", isAssigned);
+
+        PhotonNetwork.JoinRandomRoom();
+        TeamManager.playerTeam = 1;
+    }
+
     public void JoinBlueRoom() //игрок подключается к синей
     {
         nickName = nickNameField.text;
@@ -125,6 +143,6 @@ public class MenuScript : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(1);
     }
 }

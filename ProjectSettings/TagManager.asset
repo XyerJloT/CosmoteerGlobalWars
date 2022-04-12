@@ -10,6 +10,10 @@ TagManager:
   - Ship
   - Hummer
   - Bullet
+  - Symmetry
+  - Path
+  - Destroy
+  - Manger
   layers:
   - Default
   - TransparentFX

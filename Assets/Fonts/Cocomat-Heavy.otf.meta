@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 76cb1b9fe9ab9b7459959d3a6f7a7336
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Cocomat
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3672ad1cfb24ae64ea4ad71f1f7b5134, type: 3}
+  - {fileID: 12800000, guid: 00cacfd705f607f4788b14e4829d814f, type: 3}
+  - {fileID: 12800000, guid: 449ce0de953299a4db86ede8367cbfbc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
