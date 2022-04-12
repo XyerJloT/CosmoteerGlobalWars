@@ -9,19 +9,25 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private int _number;
     [SerializeField] private bool _short;
-
     [SerializeField] private InputField _input;
     
-    [Serializable]
-    public class ChangedEvent : UnityEvent<int> { }
-    public ChangedEvent OnChanged;
+    public UnityEvent<int> OnChanged;
 
     public int Number
     {
         get => _number;
         set
         {
-            UpdateField(value);
+            // Если кто-то выбрал поле, то снимаем выделение
+            if (_isSelected)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+
+            _input.contentType = InputField.ContentType.Standard;
+            _input.text = Formated(value);
+            _number = value;
+
             OnChanged?.Invoke(value);
         }
     }
@@ -32,7 +38,7 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
         set
         {
             _short = value;
-            UpdateField(_number);
+            Number = _number;
         }
     }
 
@@ -48,34 +54,22 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
     public void OnDeselect(BaseEventData eventData)
     {
         _isSelected = false;
-        UpdateField(int.Parse(_input.text));
+        Number = int.Parse(_input.text);
     }
 
     private void Start()
     {
-        UpdateField(_number);
+        // Инициализация значения из инспектора
+        Number = _number;
     }
 
     private void Update()
     {
-        // Что бы в редакторе обновлялись циферки
         if (!Application.isPlaying)
         {
-            UpdateField(_number);
+            // Обновление значения из инспектора
+            Number = _number;
         }
-    }
-
-    private void UpdateField(int number)
-    {
-        // Если кто-то выбрал поле, то снимаем выделение
-        if (_isSelected)
-        {
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-
-        _input.contentType = InputField.ContentType.Standard;
-        _input.text = Formated(number);
-        _number = number;
     }
 
     private string Formated(int number)
