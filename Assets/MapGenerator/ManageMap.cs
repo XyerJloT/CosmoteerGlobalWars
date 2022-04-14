@@ -22,10 +22,47 @@ public class ManageMap : MonoBehaviour
     public GameObject _thirdPathGroup;
     public GameObject _forthPathGroup;
     public GameObject _EndPath;
-    public bool _islandMode;
+    public static bool _isIslandMode;
+    public List<GameObject> list;
+
+    private float _offsetVar;
+
+    public float _offsetX
+    {
+        get
+        {
+            switch (_offsetVar)
+            {
+                case 1:
+                    return _offsetVar + 0.5f;
+                case 2:
+                    return _offsetVar + 0.5f;
+                case 3:
+                    return _offsetVar + 2.5f;
+                case 4:
+                    return _offsetVar + 2.5f;
+                case 5:
+                    return _offsetVar + 2.5f;
+                case 6:
+                    return _offsetVar + 2.5f;
+                case 7:
+                    return _offsetVar + 2.5f;
+                case 8:
+                    return _offsetVar + 2.4f;
+                case 9:
+                    return _offsetVar + 2.5f;
+                case 10:
+                    return _offsetVar + 2.3f;
+            }
+            return _offsetVar; 
+        }
+        set { _offsetVar = value; }
+    }
+
     //я не говнокодер
     private void Start()
     {
+        _offsetVar = MapSpawner._weight;
         _spawnPlace = GameObject.FindGameObjectWithTag("Symmetry");
         StartCoroutine("WaitForList");
     }
@@ -46,21 +83,17 @@ public class ManageMap : MonoBehaviour
     {
         for (int i = 0; i < starsList.Count; i++) //генерация карты и размещение звёзд
         {
-            Vector2 _randPos = new Vector2(starsList[i].transform.position.x + UnityEngine.Random.Range(0.01f, 0.8f), starsList[i].transform.position.y + UnityEngine.Random.Range(0.01f, 0.8f));
             int _rand = UnityEngine.Random.Range(0, starsList.Count);
-           // if(_rand <= 25)
+            if(_rand <= 25 && i != starsList.Count - 1)
             {
-                starsList[i].tag = "Destroy";
+                Destroy(starsList[i]);
                 starsList.RemoveAt(i);
             }
-           starsList[i].transform.position = _randPos;         
-        }
-        GameObject[] destroy = GameObject.FindGameObjectsWithTag("Destroy");
-        for (int i = 0; i < destroy.Length; i++)
-        {
-            Destroy(destroy[i]);
+            Vector2 _randPos = new Vector2(starsList[i].transform.position.x + UnityEngine.Random.Range(0.01f, 0.8f), starsList[i].transform.position.y + UnityEngine.Random.Range(0.01f, 0.8f));
+            starsList[i].transform.position = _randPos;         
         }
 
+        _spawnPlace.transform.position = new Vector2(_offsetX, _spawnPlace.transform.position.y);
         for (int i = 0; i < starsList.Count; i++) //копирование звёзд для симметрии
         {
             _star = starsList[i].gameObject;
@@ -68,8 +101,7 @@ public class ManageMap : MonoBehaviour
             Instantiate(_star, _spawnPos, Quaternion.identity, _spawnPlace.transform);
         }
         //отражаем полученные звёзды
-        _spawnPlace.transform.position = new Vector2(_spawnPlace.transform.position.x, _spawnPlace.transform.position.y);
-        _spawnPlace.transform.rotation = Quaternion.Euler(180f, 180f, 0f);
+        _spawnPlace.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             //возвращаем новые объекты в лист        
             StartCoroutine("WaitforStars");
     }
@@ -156,7 +188,7 @@ public class ManageMap : MonoBehaviour
             int ind = distance.IndexOf(result); 
             paths2[s1].GetComponent<PathLogic>()._star2 = stars[ind];
         }
-        if (_islandMode) StopCoroutine("ManagePaths");
+        if (_isIslandMode) StopCoroutine("ManagePaths");
         //
         //
         yield return new WaitForSecondsRealtime(0.1f);
@@ -227,7 +259,6 @@ public class ManageMap : MonoBehaviour
         Instantiate(_path,_EndPath.transform);
         endPath[0] = _EndPath.transform.GetChild(0).gameObject;
         endPath[0].gameObject.GetComponent<PathLogic>()._star1 = starsList[starsList.Count-1];
-        endPath[0].gameObject.GetComponent<PathLogic>()._star2 = stars[stars.Length-1];
-
+        endPath[0].gameObject.GetComponent<PathLogic>()._star2 = stars[stars.Length - 1];
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapSpawner : MonoBehaviour
 {
-    public int _height, _weight;
+    public static int _height = 5, _weight = 5;
 
     public GameObject[] starsPrefab; 
     // small = 50%, normal = 30%, big = 15%, giant = 5%

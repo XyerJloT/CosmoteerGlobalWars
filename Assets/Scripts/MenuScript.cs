@@ -7,11 +7,7 @@ using Photon.Realtime;
 
 public class MenuScript : MonoBehaviourPunCallbacks
 {
-    public InputField createField, joinField, nickNameField;
-
-    public GameObject redTeamCreateJoinButton, blueTeamCreateJoinButton, redTeamJoinButton, blueTeamJoinButton;
-    [SerializeField]
-    private GameObject[] objectsToDeactivate; //убрать ненужный UI
+    public InputField nickNameField;
 
     private string nickName, randomCode;
     private int isAssigned;
@@ -22,62 +18,14 @@ public class MenuScript : MonoBehaviourPunCallbacks
         isAssigned = PlayerPrefs.GetInt("IsAssigned");
 
         nickNameField.text = nickName;
-        objectsToDeactivate = GameObject.FindGameObjectsWithTag("Deactivate");
-    }
-    public void UIActivateHost()
-    {
-        for (int i = 0; i < objectsToDeactivate.Length; i++)
-        {
-            objectsToDeactivate[i].gameObject.SetActive(false);
-        }
-        //для создателя
-        redTeamCreateJoinButton.gameObject.SetActive(true);
-        blueTeamCreateJoinButton.gameObject.SetActive(true);
     }
 
-    public void UIActivatePlayer()
-    {
-        for (int i = 0; i < objectsToDeactivate.Length; i++)
-        {
-            objectsToDeactivate[i].gameObject.SetActive(false);
-        }
-        //для игрока
-        redTeamJoinButton.gameObject.SetActive(true);
-        blueTeamJoinButton.gameObject.SetActive(true);
-    }
-
-
-    public GameObject _prefab;
-    public Transform _pos;
-    public void CreateRedRoom() //хост подключается к красной
+    public void CreateRoom(bool isRed)
     {
         nickName = nickNameField.text;
         if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = nickName + randomCode;
         isAssigned = 1;
-
-
-
-        PlayerPrefs.SetString("NickName", nickName);
-        PlayerPrefs.SetString("RandomCode", randomCode);
-        PlayerPrefs.SetInt("IsAssigned", isAssigned);
-
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 20; 
-        PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
-        if(Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.N) && Input.GetKey(KeyCode.D)) TeamManager.playerTeam = 0; //зайти как разработчик
-        else TeamManager.playerTeam = 1;
-        
-    }
-
-    public void CreateBlueRoom() //хост подключается к синей
-    {
-        nickName = nickNameField.text;
-        if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
-        PhotonNetwork.NickName = nickName + randomCode;
-        isAssigned = 1;
-
-
 
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("RandomCode", randomCode);
@@ -85,60 +33,26 @@ public class MenuScript : MonoBehaviourPunCallbacks
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
-        PhotonNetwork.CreateRoom(createField.text, roomOptions);
-        TeamManager.playerTeam = 2;
+        PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
+        if (isRed) TeamManager.playerTeam = 1;
+        else TeamManager.playerTeam = 2; 
     }
 
-
-    public void JoinRedRoom() //игрок подключается к красной
+    public void JoinRoom(bool isRed)
     {
         nickName = nickNameField.text;
         if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = nickName + randomCode;
         isAssigned = 1;
 
-
-
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("RandomCode", randomCode);
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
 
-        PhotonNetwork.JoinRoom(joinField.text);
-        TeamManager.playerTeam = 1;
-    }
-
-    public void JoinRandomRoom()
-    {
-        nickName = nickNameField.text;
-        if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
-        PhotonNetwork.NickName = nickName + randomCode;
-        isAssigned = 1;
-
-
-
-        PlayerPrefs.SetString("NickName", nickName);
-        PlayerPrefs.SetString("RandomCode", randomCode);
-        PlayerPrefs.SetInt("IsAssigned", isAssigned);
-
+        // PhotonNetwork.JoinRoom(joinField.text);
         PhotonNetwork.JoinRandomRoom();
-        TeamManager.playerTeam = 1;
-    }
-
-    public void JoinBlueRoom() //игрок подключается к синей
-    {
-        nickName = nickNameField.text;
-        if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
-        PhotonNetwork.NickName = nickName + randomCode;
-        isAssigned = 1;
-
-
-
-        PlayerPrefs.SetString("NickName", nickName);
-        PlayerPrefs.SetString("RandomCode", randomCode);
-        PlayerPrefs.SetInt("IsAssigned", isAssigned);
-
-        PhotonNetwork.JoinRoom(joinField.text);
-        TeamManager.playerTeam = 2;
+        if (isRed) TeamManager.playerTeam = 1;
+        else TeamManager.playerTeam = 2;
     }
 
     public override void OnJoinedRoom()

@@ -5,40 +5,40 @@ using UnityEngine.UI;
 
 public class UiStart : MonoBehaviour
 {
-    public GameObject _menu;
-    public GameObject _back;
-    //List<Vector2> scale;
-    Vector2 scale, scale2, scale3;
+    [SerializeField] GameObject[] objectsToActivate;
+    Vector2[] scales;
+    Vector2 _startScale;
     private void Start()
     {
-        scale = _menu.GetComponent<RectTransform>().sizeDelta;
-        scale2 = _back.GetComponent<RectTransform>().sizeDelta;
-        scale3 = gameObject.GetComponent<RectTransform>().sizeDelta;
+        scales = new Vector2[objectsToActivate.Length];
+        _startScale = gameObject.GetComponent<RectTransform>().sizeDelta;
+        for (int i = 0; i < objectsToActivate.Length; i++)
+        {
+            scales[i] = objectsToActivate[i].GetComponent<RectTransform>().sizeDelta;
+        }
     }
 
     public void ScaleUI()
     {
-        _menu.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
-        _back.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
-        _menu.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        foreach (var _obj in objectsToActivate)
+        {
+            _obj.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+            _obj.SetActive(true);
+        }
         StartCoroutine("ScaleCoroutine") ;
     }
 
     private IEnumerator ScaleCoroutine()
     {
-        _back.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        _back.SetActive(true);
-
         for (int i = 0; i < 10; i++)
         {
-            _back.GetComponent<RectTransform>().sizeDelta += new Vector2(scale2.x / 10, scale2.y / 10);
-            _menu.GetComponent<RectTransform>().sizeDelta += new Vector2(scale.x/10, scale.y/10);
-            gameObject.GetComponent<RectTransform>().sizeDelta -= new Vector2(scale3.x / 10, scale3.y / 10);
+            FillArray fill = new FillArray();
+            fill.FillRectSizePlus(objectsToActivate, scales);
+            gameObject.GetComponent<RectTransform>().sizeDelta -= new Vector2(_startScale.x / 10, _startScale.y / 10);
             yield return new WaitForSecondsRealtime(0.01f);
         }
-        _menu.GetComponent<UiMenu>().MenuStart();
-        gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        gameObject.GetComponent<RectTransform>().sizeDelta = scale3;
+        GameObject.Find("MenuField").GetComponent<UiMenu>().MenuStart();
         gameObject.SetActive(false);
+        gameObject.GetComponent<RectTransform>().sizeDelta = _startScale;
     }
 }
