@@ -7,11 +7,8 @@ using Photon.Realtime;
 
 public class MenuScript : MonoBehaviourPunCallbacks
 {
-    public InputField createField, joinField, nickNameField;
-
-    public GameObject redTeamCreateJoinButton, blueTeamCreateJoinButton, redTeamJoinButton, blueTeamJoinButton;
-    [SerializeField]
-    private GameObject[] objectsToDeactivate; //убрать ненужный UI
+    public InputField  nickNameField;
+    [SerializeField] private Slider _sliderHeight, _sliderWeight;
 
     private string nickName, randomCode;
     private int isAssigned;
@@ -22,19 +19,9 @@ public class MenuScript : MonoBehaviourPunCallbacks
         isAssigned = PlayerPrefs.GetInt("IsAssigned");
 
         nickNameField.text = nickName;
-        objectsToDeactivate = GameObject.FindGameObjectsWithTag("Deactivate");
-    }
-    public void UIActivateHost()
-    {
-        for (int i = 0; i < objectsToDeactivate.Length; i++)
-        {
-            objectsToDeactivate[i].gameObject.SetActive(false);
-        }
-        //для создателя
-        redTeamCreateJoinButton.gameObject.SetActive(true);
-        blueTeamCreateJoinButton.gameObject.SetActive(true);
     }
 
+<<<<<<< Updated upstream
     public void UIActivatePlayer()
     {
         for (int i = 0; i < objectsToDeactivate.Length; i++)
@@ -49,18 +36,20 @@ public class MenuScript : MonoBehaviourPunCallbacks
 
 
     public void CreateRedRoom() //хост подключается к красной
+=======
+    public void CreateRoom(bool redTeam)
+>>>>>>> Stashed changes
     {
         nickName = nickNameField.text;
         if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = nickName + randomCode;
         isAssigned = 1;
 
-
-
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("RandomCode", randomCode);
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
 
+<<<<<<< Updated upstream
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
         PhotonNetwork.CreateRoom(createField.text, roomOptions);
@@ -81,46 +70,47 @@ public class MenuScript : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("RandomCode", randomCode);
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
+=======
+        MapSpawner._height = Mathf.RoundToInt(_sliderHeight.value);
+        MapSpawner._weight = Mathf.RoundToInt(_sliderWeight.value);
+>>>>>>> Stashed changes
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
-        PhotonNetwork.CreateRoom(createField.text, roomOptions);
-        TeamManager.playerTeam = 2;
+        PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
+        if(redTeam) TeamManager.playerTeam = 1;
+        else TeamManager.playerTeam = 2;
     }
 
-
-    public void JoinRedRoom() //игрок подключается к красной
-    {
-        nickName = nickNameField.text;
-        if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
-        PhotonNetwork.NickName = nickName + randomCode;
-        isAssigned = 1;
-
-
-
-        PlayerPrefs.SetString("NickName", nickName);
-        PlayerPrefs.SetString("RandomCode", randomCode);
-        PlayerPrefs.SetInt("IsAssigned", isAssigned);
-
-        PhotonNetwork.JoinRoom(joinField.text);
-        TeamManager.playerTeam = 1;
-    }
-
+<<<<<<< Updated upstream
     public void JoinBlueRoom() //игрок подключается к синей
+=======
+    public void JoinRoom(bool redTeam)
+>>>>>>> Stashed changes
     {
         nickName = nickNameField.text;
         if (isAssigned == 0) randomCode = "#" + Random.Range(1000, 9999);
         PhotonNetwork.NickName = nickName + randomCode;
         isAssigned = 1;
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("RandomCode", randomCode);
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
 
+<<<<<<< Updated upstream
         PhotonNetwork.JoinRoom(joinField.text);
         TeamManager.playerTeam = 2;
+=======
+        PhotonNetwork.JoinRandomRoom();
+        //PhotonNetwork.JoinRoom(joinField.text);
+        if (redTeam) TeamManager.playerTeam = 1;
+        else TeamManager.playerTeam = 2;
+>>>>>>> Stashed changes
     }
 
     public override void OnJoinedRoom()
