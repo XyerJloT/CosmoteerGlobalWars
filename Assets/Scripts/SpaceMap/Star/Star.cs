@@ -1,13 +1,14 @@
-public class StarModel
+using System;
+
+public class Star
 {
     public readonly int Incom;
     public readonly string Name;
     public readonly Hangar Hangar = new Hangar();
 
-    public delegate void CaptureHandler(Team invader);
-    public event CaptureHandler OnCaptured;
+    public event Action<Team> OnCaptured;
 
-    public StarModel(string name, int incom)
+    public Star(string name, int incom)
     {
         Name = name;
         Incom = incom;

@@ -1,8 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
-using UnityEngine.Events;
 
 public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -12,11 +11,9 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private Image _stroke;
     [SerializeField] private Behaviour _selection;
 
-    public StarModel Model { get; private set; }
+    public Star Model { get; private set; }
 
-    [Serializable]
-    public class ClickHandler : UnityEvent<StarModel> { }
-    public ClickHandler OnClick;
+    public event Action OnClick;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -32,7 +29,7 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnClick?.Invoke(Model);
+        OnClick?.Invoke();
     }
 
     private void Start()
@@ -40,7 +37,7 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _selection.enabled = false;
         _description.text = MinimalDescription();
 
-        Model = new StarModel(_name, _incom);
+        Model = new Star(_name, _incom);
         Model.OnCaptured += HandleCapture;
         Model.Capture(Team.Neutral);
     }
