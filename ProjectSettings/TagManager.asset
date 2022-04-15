@@ -10,6 +10,11 @@ TagManager:
   - Ship
   - Hummer
   - Bullet
+  - Symmetry
+  - Path
+  - Destroy
+  - Manger
+  - ShipIcon
   layers:
   - Default
   - TransparentFX
