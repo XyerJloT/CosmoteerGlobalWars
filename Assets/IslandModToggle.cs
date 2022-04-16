@@ -6,7 +6,7 @@ public class IslandModToggle : MonoBehaviour
 {
     public void OnPress(bool isOn)
     {
-        if (isOn) ManageMap._isIlandMode = true;
-        else ManageMap._isIlandMode = false;
+        if (isOn) ManageMap._isIslandMode = true;
+        else ManageMap._isIslandMode = false;
     }
 }
