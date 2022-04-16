@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class UiBack : MonoBehaviour
 {
-    [SerializeField]GameObject[] menuObjects, joinOrCreateObjects;
+    [SerializeField] GameObject[] menuObjects, joinOrCreateObjects;
     private Vector2[] scalesMenu, scalesJoinOrCreateObjects;
 
-    [SerializeField]GameObject _start, _menu;
+    [SerializeField] GameObject _start, _menu;
     Vector2 _startScale;
     private void Start()
     {
@@ -30,8 +30,7 @@ public class UiBack : MonoBehaviour
     {
         if (needStart)
         {
-            _start.GetComponent<RectTransform>().sizeDelta = Vector2.zero;      
-            _start.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            _start.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
             _start.SetActive(true);
         }
         StartCoroutine("CoroutineBack", needStart);
@@ -50,13 +49,6 @@ public class UiBack : MonoBehaviour
             fill.FillRectSizeMinus(joinOrCreateObjects, scalesJoinOrCreateObjects);
             yield return new WaitForSecondsRealtime(0.005f);
         }
-        _cBt.SetActive(false);
-        _cBt2.SetActive(false);
-        _jBt.SetActive(false);
-        _jBt2.SetActive(false);
-        _slider1.SetActive(false);
-        _slider2.SetActive(false);
-        _toggle1.SetActive(false);
 
         foreach (var _obj in joinOrCreateObjects)
         {
@@ -71,15 +63,13 @@ public class UiBack : MonoBehaviour
         {
             FillArray fill = new FillArray();
             fill.FillRectSizeMinus(menuObjects, scalesMenu);
-            if(needStart) _start.GetComponent<RectTransform>().sizeDelta += new Vector2(_startScale.x / 10, _startScale.y / 10);
+            if (needStart) _start.GetComponent<RectTransform>().sizeDelta += new Vector2(_startScale.x / 10, _startScale.y / 10);
             yield return new WaitForSecondsRealtime(0.005f);
         }
         foreach (var _obj in menuObjects)
         {
             _obj.SetActive(false);
         }
-        _menu.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        gameObject.GetComponent<Image>().color = new Color(1, 1, 1, 0);
 
         for (int i = 0; i < menuObjects.Length; i++)
         {
