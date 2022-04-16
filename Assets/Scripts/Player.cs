@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 class Player
 {
+    public static readonly Player Instantce = new Player();
+
     public string Name { get; private set; }
     public Team MyTeam { get; private set; }
+
+    private Player() { }
 }
 
