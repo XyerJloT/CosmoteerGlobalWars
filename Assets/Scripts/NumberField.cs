@@ -1,17 +1,18 @@
-using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [ExecuteInEditMode]
-public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
+public class NumberField : MonoBehaviour, ISelectHandler
 {
     [SerializeField] private int _number;
     [SerializeField] private bool _short;
     [SerializeField] private InputField _input;
     
     public UnityEvent<int> OnChanged;
+    public UnityEvent<int> OnEndEdit;
 
     public int Number
     {
@@ -51,25 +52,38 @@ public class NumberField : MonoBehaviour, ISelectHandler, IDeselectHandler
         _isSelected = true;
     }
 
-    public void OnDeselect(BaseEventData eventData)
+    private void OnEnable()
     {
-        _isSelected = false;
-        Number = int.Parse(_input.text);
+        _input.onEndEdit.AddListener(EndEditHandler);
     }
 
     private void Start()
     {
         // Инициализация значения из инспектора
-        Number = _number;
+        Number = _number;        
     }
 
     private void Update()
     {
-        if (!Application.isPlaying)
-        {
-            // Обновление значения из инспектора
-            Number = _number;
-        }
+        if (!Application.isPlaying) Number = _number;
+    }
+
+    private void OnDisable()
+    {
+        _input.onEndEdit.RemoveListener(EndEditHandler);
+    }
+
+    private void EditorUpdate()
+    {
+        Number = _number;
+    }
+
+    private void EndEditHandler(string value)
+    {
+        _isSelected = false;
+        Number = int.Parse(value);
+
+        OnEndEdit?.Invoke(Number);
     }
 
     private string Formated(int number)
