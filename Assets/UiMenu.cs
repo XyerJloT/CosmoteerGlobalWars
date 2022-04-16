@@ -45,22 +45,12 @@ public class UiMenu : MonoBehaviour
 
     IEnumerator CoroutineClose()
     {
-        obj4.transform.GetChild(0).gameObject.SetActive(false);
         for (int i = 0; i < 10; i++)
         {
             FillArray fill = new FillArray();
             fill.FillRectSizeMinus(objectsToResize, scales);
             yield return new WaitForSecondsRealtime(0.004f);
         }
-        obj1.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        obj1.SetActive(false);
-
-        obj2.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-        obj2.SetActive(false);
-
-        obj3.SetActive(false);
-
-        obj4.SetActive(false);
 
         foreach (var _obj in objectsToResize)
         {
