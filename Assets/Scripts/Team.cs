@@ -31,7 +31,7 @@ public class Team
     private ISet<Star> _captured = new HashSet<Star>();
     private List<Blueprint> _blueprints = new List<Blueprint>();
 
-    Team(TeamId id, Color color)
+    public Team(TeamId id, Color color)
     {
         Id = id;
         Color = color;
