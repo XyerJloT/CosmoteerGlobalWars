@@ -6,7 +6,7 @@ public class FillArray : MonoBehaviour
     {
         for (int i = 0; i < gameObjects.Length; i++)
         {
-            gameObjects[i].GetComponent<RectTransform>().sizeDelta += new Vector2(vector2s[i].x / 10, vector2s[i].y / 10);
+            gameObjects[i].GetComponent<RectTransform>().localScale += new Vector3(vector2s[i].x / 10, vector2s[i].y / 10);
         }
         return (gameObjects);
     }
@@ -15,7 +15,7 @@ public class FillArray : MonoBehaviour
     {
         for (int i = 0; i < gameObjects.Length; i++)
         {
-            gameObjects[i].GetComponent<RectTransform>().sizeDelta -= new Vector2(vector2s[i].x / 10, vector2s[i].y / 10);
+            gameObjects[i].GetComponent<RectTransform>().localScale -= new Vector3(vector2s[i].x / 10, vector2s[i].y / 10);
         }
         return (gameObjects);
     }

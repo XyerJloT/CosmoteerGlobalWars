@@ -11,14 +11,14 @@ public class UiMenu : MonoBehaviour
         scales = new Vector2[objectsToResize.Length];
         for (int i = 0; i < objectsToResize.Length; i++)
         {
-            scales[i] = objectsToResize[i].GetComponent<RectTransform>().sizeDelta;
+            scales[i] = objectsToResize[i].GetComponent<RectTransform>().localScale;
         }
     }
     public void MenuStart()
     {
         foreach (var _obj in objectsToResize)
         {
-            _obj.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+            _obj.GetComponent<RectTransform>().localScale = Vector2.zero;
         }
         StartCoroutine("CoroutineStart");
     }

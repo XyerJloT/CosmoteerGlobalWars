@@ -11,10 +11,10 @@ public class UiStart : MonoBehaviour
     private void Start()
     {
         scales = new Vector2[objectsToActivate.Length];
-        _startScale = gameObject.GetComponent<RectTransform>().sizeDelta;
+        _startScale = gameObject.GetComponent<RectTransform>().localScale;
         for (int i = 0; i < objectsToActivate.Length; i++)
         {
-            scales[i] = objectsToActivate[i].GetComponent<RectTransform>().sizeDelta;
+            scales[i] = objectsToActivate[i].GetComponent<RectTransform>().localScale;
         }
     }
 
@@ -22,7 +22,7 @@ public class UiStart : MonoBehaviour
     {
         foreach (var _obj in objectsToActivate)
         {
-            _obj.GetComponent<RectTransform>().sizeDelta = Vector2.zero;
+            _obj.GetComponent<RectTransform>().localScale = Vector2.zero;
             _obj.SetActive(true);
         }
         StartCoroutine("ScaleCoroutine") ;
@@ -34,11 +34,11 @@ public class UiStart : MonoBehaviour
         {
             FillArray fill = new FillArray();
             fill.FillRectSizePlus(objectsToActivate, scales);
-            gameObject.GetComponent<RectTransform>().sizeDelta -= new Vector2(_startScale.x / 10, _startScale.y / 10);
+            gameObject.GetComponent<RectTransform>().localScale -= new Vector3(_startScale.x / 10, _startScale.y / 10);
             yield return new WaitForSecondsRealtime(0.01f);
         }
         GameObject.Find("MenuField").GetComponent<UiMenu>().MenuStart();
         gameObject.SetActive(false);
-        gameObject.GetComponent<RectTransform>().sizeDelta = _startScale;
+        gameObject.GetComponent<RectTransform>().localScale = _startScale;
     }
 }
