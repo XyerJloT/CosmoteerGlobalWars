@@ -31,7 +31,6 @@ public class MenuScript : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("RandomCode", randomCode);
         PlayerPrefs.SetInt("IsAssigned", isAssigned);
 
-<<<<<<< Updated upstream
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
         PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
