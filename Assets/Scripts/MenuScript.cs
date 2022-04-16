@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 public class MenuScript : MonoBehaviourPunCallbacks
 {
@@ -34,8 +35,9 @@ public class MenuScript : MonoBehaviourPunCallbacks
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 20;
         PhotonNetwork.CreateRoom($"{PhotonNetwork.NickName}'s room", roomOptions);
-        //if (isRed) TeamManager.playerTeam = 1;
-        //else TeamManager.playerTeam = 2; 
+
+        if (isRed) PhotonNetwork.LocalPlayer.JoinTeam(1);
+        else PhotonNetwork.LocalPlayer.JoinTeam(2);
     }
 
     public void JoinRoom(bool isRed)
@@ -51,8 +53,8 @@ public class MenuScript : MonoBehaviourPunCallbacks
 
         // PhotonNetwork.JoinRoom(joinField.text);
         PhotonNetwork.JoinRandomRoom();
-        //if (isRed) TeamManager.playerTeam = 1;
-        //else TeamManager.playerTeam = 2;
+        if (isRed) PhotonNetwork.LocalPlayer.JoinTeam(1);
+        else PhotonNetwork.LocalPlayer.JoinTeam(2);
     }
 
     public override void OnJoinedRoom()
