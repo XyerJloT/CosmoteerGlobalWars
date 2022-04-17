@@ -14,7 +14,7 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public Star Model { get; private set; }
 
-    public UnityEvent<Star> OnClick;
+    public UnityEvent<StarView> OnClick;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -30,7 +30,7 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnClick?.Invoke(Model);
+        OnClick?.Invoke(gameObject.GetComponent<StarView>()); ;
     }
 
     private void Start()
