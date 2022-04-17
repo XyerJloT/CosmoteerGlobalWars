@@ -18,8 +18,8 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
         scales = new List<Vector2>(objectsToResize.Count);
         for (int i = 0; i < objectsToResize.Count; i++)
         {
-            scales.Add(objectsToResize[i].sizeDelta);
-            objectsToResize[i].sizeDelta = Vector2.zero;
+            scales.Add(objectsToResize[i].localScale);
+            objectsToResize[i].localScale = Vector2.zero;
             if (_deactivate) objectsToResize[i].gameObject.SetActive(false);
         }
     }
@@ -43,7 +43,7 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
         {
             for (int o = 0; o < objectsToResize.Count; o++)
             {
-                objectsToResize[o].sizeDelta += new Vector2(scales[o].x / _stepsCount, scales[o].y / _stepsCount);
+                objectsToResize[o].localScale += new Vector3(scales[o].x / _stepsCount, scales[o].y / _stepsCount);
             }
             yield return new WaitForSecondsRealtime(_speed);
         }
@@ -58,7 +58,7 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
         {
             for (int o = 0; o < objectsToResize.Count; o++)
             {
-                objectsToResize[o].sizeDelta -= new Vector2(scales[o].x / _stepsCount, scales[o].y / _stepsCount);
+                objectsToResize[o].localScale -= new Vector3(scales[o].x / _stepsCount, scales[o].y / _stepsCount);
             }
             yield return new WaitForSecondsRealtime(_speed);
         }
