@@ -49,7 +49,7 @@ public class UiMenu : MonoBehaviour
         {
             FillArray fill = new FillArray();
             fill.FillRectSizeMinus(objectsToResize, scales);
-            yield return new WaitForSecondsRealtime(0.004f);
+            yield return new WaitForSecondsRealtime(0.006f);
         }
 
         foreach (var _obj in objectsToResize)

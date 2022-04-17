@@ -66,7 +66,7 @@ public class CreateUi : MonoBehaviour
                 FillArray fill = new FillArray();
                 fill.FillRectSizePlus(joinObjects, scalesJoin);
             }
-            yield return new WaitForSecondsRealtime(0.004f);
+            yield return new WaitForSecondsRealtime(0.015f);
         }
     }
 }

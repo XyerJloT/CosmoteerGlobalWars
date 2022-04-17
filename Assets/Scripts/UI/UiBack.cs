@@ -50,9 +50,9 @@ public class UiBack : MonoBehaviour
         {
             FillArray fill = new FillArray();
             fill.FillRectSizeMinus(joinOrCreateObjects, scalesJoinOrCreateObjects);
-            yield return new WaitForSecondsRealtime(0.005f);
             _start.GetComponent<RectTransform>().localScale += new Vector3(_startScale.x / 10, _startScale.y / 10);
             _back1.GetComponent<RectTransform>().localScale -= new Vector3(_scaleBack.x / 10, _scaleBack.y / 10);
+            yield return new WaitForSecondsRealtime(0.008f);
         }
         _back1.SetActive(false);
         _back1.GetComponent<RectTransform>().localScale = _scaleBack;
@@ -72,7 +72,7 @@ public class UiBack : MonoBehaviour
             fill.FillRectSizeMinus(menuObjects, scalesMenu);
             if (needStart) _start.GetComponent<RectTransform>().localScale += new Vector3(_startScale.x / 10, _startScale.y / 10);
            // gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(_scaleObj.x / 10, _scaleObj.y / 10);
-            yield return new WaitForSecondsRealtime(0.005f);
+            yield return new WaitForSecondsRealtime(0.008f);
         }
         foreach (var _obj in menuObjects)
         {
