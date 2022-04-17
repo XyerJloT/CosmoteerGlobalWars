@@ -25,7 +25,7 @@ public class Client : MonoBehaviour
     {
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            if (PhotonNetwork.LocalPlayer.GetPhotonTeam() == PhotonNetwork.PlayerList[i].GetPhotonTeam())
+            if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Code == PhotonNetwork.PlayerList[i].GetPhotonTeam().Code)
             {
                 view.RPC("GetMoney", RpcTarget.Others, Player.Instance.Balance, Player.Instance.Income, PhotonNetwork.LocalPlayer.GetPhotonTeam().Code);
             }

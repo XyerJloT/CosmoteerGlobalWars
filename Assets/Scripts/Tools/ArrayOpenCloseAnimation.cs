@@ -10,7 +10,7 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
     [Header("Деактивировать объект при уменьшении")] [SerializeField] bool _deactivate;
     List<Vector2> scales;
     [Space]
-    [SerializeField] bool _isOpened;
+    public bool IsOpened;
     bool _process;
 
     private void Start()
@@ -24,10 +24,15 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
         }
     }
 
-    public void OpenClose()
+    public void Reopen()
     {
-        if (!_isOpened && !_process) StartCoroutine("OpenAnimation");
-        else if(_isOpened && !_process) StartCoroutine("CloseAnimation");
+        if (IsOpened && !_process) Close();
+        else if (!_process) StartCoroutine("OpenAnimation");
+    }
+
+    public void Close()
+    {
+       if(!_process) StartCoroutine("CloseAnimation");
     }
     IEnumerator OpenAnimation()
     {
@@ -47,7 +52,7 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(_speed);
         }
-        _isOpened = true;
+        IsOpened = true;
         _process = false;
     }
 
@@ -62,7 +67,7 @@ public class ArrayOpenCloseAnimation : MonoBehaviour
             }
             yield return new WaitForSecondsRealtime(_speed);
         }
-        _isOpened = false;
+        IsOpened = false;
         _process = false;
 
         if (_deactivate)

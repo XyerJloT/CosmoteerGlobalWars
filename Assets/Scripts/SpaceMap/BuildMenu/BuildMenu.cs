@@ -16,12 +16,14 @@ public class BuildMenu : MonoBehaviour
     public Star OpenedStar { get; private set; }
 
     public bool IsOpened => OpenedStar != null;
-    
-    public void Reopen(Star target)
+
+    public void Reopen(StarView target)
     {
         if (IsOpened) Close();
 
-        OpenedStar = target;
+        OpenedStar = target.Model;
+        gameObject.GetComponent<RectTransform>().localPosition = new Vector2(target.gameObject.GetComponent<RectTransform>().localPosition.x + 100,
+                                                                                target.gameObject.GetComponent<RectTransform>().localPosition.y + 50);
         OpenedStar.Blueprints.CollectionChanged += HandleChangeBlueprintList;
 
         _starName.text = OpenedStar.Name;

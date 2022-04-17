@@ -30,7 +30,7 @@ public class StarView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnClick?.Invoke(gameObject.GetComponent<StarView>()); ;
+        OnClick?.Invoke(this);
     }
 
     private void Start()
