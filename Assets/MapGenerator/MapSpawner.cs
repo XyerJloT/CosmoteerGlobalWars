@@ -1,36 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapSpawner : MonoBehaviour
 {
-    public static int _height = 5;
-    public static int _weight = 5;
+    public int Height = 5;
+    public int Weight = 5;
 
 
-    public GameObject[] starsPrefab; 
-    // small = 50%, normal = 30%, big = 15%, giant = 5%
+    [SerializeField] List<Vector2> positions;
+    [SerializeField] [Range(0, 1)] float _percentOfPosToDestroy = 0.25f; //процент координат, подлежащих уничтожению
+    //[SerializeField] GameObject Obj; это для проверки рандомности
+
+    public void Reload() //для удобства, потом удалить нахуй!!!
+    {
+        SceneManager.LoadScene("Generator");
+    }
 
     void Start()
     {
-        //генерация
-
         MapGeneration _generator = new MapGeneration();
-        MapGeneratorStars[,] _map = _generator.GenerateMap(_weight, _height); //вызываем функцию
+        MapGeneratorStars[,] map = _generator.GenerateMap(Weight * 2, Height * 2);
 
-        for (int x = 0; x < _map.GetLength(0); x++) //ширина, работаем с первой осью массива
+        for (int x = 0; x < map.GetLength(0); x += 2)
         {
-            for (int y = 0; y < _map.GetLength(1); y++) //высота, вторая ось массива
+            for (int y = 0; y < map.GetLength(1); y += 2)
             {
-                GameObject _objectToSpawn; //спавн объекта с рандомным шансом
-                int _percentToSpawn = Random.Range(1, 100);
-                if (_percentToSpawn >= 1 && _percentToSpawn <= 50) _objectToSpawn = starsPrefab[0];
-                else if (_percentToSpawn > 50 && _percentToSpawn <= 87) _objectToSpawn = starsPrefab[1];
-                else if (_percentToSpawn > 87 && _percentToSpawn <= 97) _objectToSpawn = starsPrefab[2];
-                else _objectToSpawn = starsPrefab[3];
-
-                Instantiate(_objectToSpawn, new Vector2(x, y), Quaternion.identity);
+                Debug.Log($"{x} {y}");
+                positions.Add(new Vector2(x, y));
             }
+        }
+
+        ManageVectors();
+    }
+
+    private void ManageVectors()
+    {
+        int _countOfPosToDestroy = Mathf.RoundToInt(_percentOfPosToDestroy * positions.Count);
+        for (int r = 0; r < _countOfPosToDestroy;  r++)
+        {
+            int randStarToRemove = Random.Range(0, positions.Count - 1);
+            positions.RemoveAt(randStarToRemove);
+        }
+
+        for (int i = 0; i < positions.Count; i++)
+        {
+            float randPos = Random.Range(0f, 1.7f);
+            positions[i] = new Vector2(positions[i].x + randPos, positions[i].y + randPos);
+           // Instantiate(Obj, positions[i], Quaternion.identity);          
+        }
+
+        for (int first = 0; first < positions.Count; first++)
+        {
+            List<float> findIndex = new List<float>();
+            List<float> dist = new List<float>();
+            for (int second = 0; second < positions.Count; second++)
+            {
+                findIndex.Add(Vector2.Distance(positions[first], positions[second]));
+
+                if (first != second)
+                dist.Add(Vector2.Distance(positions[first], positions[second]));
+            }
+            float _minDist = dist.Min();
+            int _index = findIndex.IndexOf(_minDist);
+            //мы получили индекс звезды, с которой у нас будет минимальное расстояние; _minDist по индексам = positions
         }
     }
 

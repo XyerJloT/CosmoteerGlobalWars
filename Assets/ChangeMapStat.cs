@@ -13,8 +13,8 @@ public class ChangeMapStat : MonoBehaviour
     }
     private void Update()
     {
-        MapSpawner._height = (int)_height.value;
-        MapSpawner._weight = (int)_weight.value;
+       // MapSpawner.Height = (int)_height.value;
+       // MapSpawner.Weight = (int)_weight.value;
         ManageMap._isIslandMode = _isIslandMod.isOn;
 
         PlayerPrefs.SetFloat("Height", _height.value);

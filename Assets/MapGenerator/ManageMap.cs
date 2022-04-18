@@ -62,7 +62,7 @@ public class ManageMap : MonoBehaviour
     //я не говнокодер
     private void Start()
     {
-        _offsetVar = MapSpawner._weight;
+       // _offsetVar = MapSpawner.Weight;
         _spawnPlace = GameObject.FindGameObjectWithTag("Symmetry");
         StartCoroutine("WaitForList");
     }
