@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ContentSwitcher : MonoBehaviour
+public class TabSwitcher : MonoBehaviour
 {
     [SerializeField] private int _defaultActiveTab;
     [SerializeField] private GameObject[] _tabContainers;
@@ -40,6 +40,7 @@ public class ContentSwitcher : MonoBehaviour
 
     private void Update()
     {
+        // Обновление в редакторе
         if (!Application.isPlaying)
         {
             ActiveTabIndex = _defaultActiveTab;
