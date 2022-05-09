@@ -1,6 +1,8 @@
-﻿public class ShipRankMatcher : IShipRankMatcher
+﻿using Assets.Scripts.Library;
+
+public class DefaultRankMatcher : IRankMatcher
 {
-    public Ship.RankType MatchRank(int cost)
+    public Ship.RankType MatchByCost(int cost)
     {
         if (cost <= 75_000) return Ship.RankType.Corvette;
         if (cost <= 150_000) return Ship.RankType.Frigate;

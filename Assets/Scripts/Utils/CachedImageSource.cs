@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
-    public class ChachedImageSource : IImageSource
+    public class CachedImageSource : IImageSource
     {
         private readonly Dictionary<string, Texture2D> _cache = new Dictionary<string, Texture2D>();
 
