@@ -11,8 +11,6 @@ public class Team
     public readonly Color Color;
     public readonly Balance Balance = new Balance();
 
-    public IEnumerable<Blueprint> Blueprints => _blueprints;
-
     public delegate void ChangeIncomHandler(int total, int delta);
     public event ChangeIncomHandler OnChangedIncom;
 
@@ -29,7 +27,6 @@ public class Team
 
     private int _incom = 0;
     private ISet<Star> _captured = new HashSet<Star>();
-    private List<Blueprint> _blueprints = new List<Blueprint>();
 
     public Team(TeamId id, Color color)
     {
@@ -59,17 +56,5 @@ public class Team
             _captured.Remove(star);
             Incom -= star.Incom;
         }
-    }
-
-    public Blueprint AddBlueprint(string name, int cost, Ship.RankType type)
-    {
-        var blueprint = new Blueprint(name, type, cost);
-        _blueprints.Add(blueprint);
-        return blueprint;
-    }
-
-    public bool RemoveBlueprint(Blueprint blueprint)
-    {
-        return _blueprints.Remove(blueprint);
     }
 }
