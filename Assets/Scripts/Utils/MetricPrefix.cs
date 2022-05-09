@@ -15,7 +15,11 @@ class MetricPrefix
 
     public override string ToString()
     {
+        if (Number == 0) return "0";
+
         var value = Number / Math.Pow(10, Exponent);
+
+        if (Prefix.Length == 0) return $"{value:###.##}";
 
         return $"{value:###.##} {Prefix}";
     }
@@ -39,15 +43,15 @@ class MetricPrefix
         return exponent - (exponent % 3);
     }
 
-    private string GetPrefix(int exponent)
+    private string GetPrefix(int roundedExponent)
     {
-        switch (exponent)
+        switch (roundedExponent)
         {
             case 0: return "";
             case 3: return "K";
             case 6: return "M";
             case 9: return "G";
-            default: return "error " + exponent.ToString();
+            default: throw new ArgumentException($"Недопустимое значение экспоненты: {roundedExponent}");
         }
     }
 }
