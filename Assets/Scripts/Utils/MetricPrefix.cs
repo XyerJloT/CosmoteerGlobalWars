@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 class MetricPrefix
 {
-    private static Dictionary<int, string> _presixes = new Dictionary<int, string>
-    {
-        { 0, "" },
-        { 3, "K" },
-        { 6, "M" },
-        { 9, "G" }
-    };
-
     public readonly int Number;
     public readonly int Exponent;
     public readonly string Prefix;
@@ -26,7 +17,7 @@ class MetricPrefix
     {
         var value = Number / Math.Pow(10, Exponent);
 
-        return $"{value.ToString("###.##")} {Prefix}";
+        return $"{value:###.##} {Prefix}";
     }
 
     private int CalculateExponent(int number)
