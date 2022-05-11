@@ -63,7 +63,7 @@ public class StarMenu : MonoBehaviour
     private IEnumerator OpenCoroutine(StarView target)
     {
         _starName.text = target.Model.Name;
-        SetBlueptintCollection(target.Model.Blueprints);
+        //SetBlueptintCollection(target.Model.Blueprints);
 
         MoveToStar(target.transform);
         yield return _animation.OpenCoroutine();
@@ -79,17 +79,17 @@ public class StarMenu : MonoBehaviour
         
         _starName.text = "Empty";
 
-        RemoveBlueprintCollection(OpenedStar.Model.Blueprints);
+        //RemoveBlueprintCollection(OpenedStar.Model.Blueprints);
         OpenedStar = null;
     }
 
     private void HandleChangeBlueprintList(object sender, NotifyCollectionChangedEventArgs e)
     {
         // TODO: Изменение списка чертежей вместо ReloadBlueprints
-        ReloadBlueprints(OpenedStar.Model.Blueprints);
+        //ReloadBlueprints(OpenedStar.Model.Blueprints);
     }
 
-    private void ReloadBlueprints(IEnumerable<Blueprint> blueprints)
+    /*private void ReloadBlueprints(IEnumerable<Blueprint> blueprints)
     {
         ClearBlueprints();
 
@@ -98,36 +98,36 @@ public class StarMenu : MonoBehaviour
             var row = InstantiateBlueprintRow(blueprint);
             _blueprints.Add(row);
         }
-    }
+    }*/
 
     private void ClearBlueprints()
     {
         _blueprints.ForEach(Destroy);
     }
 
-    private BlueprintRow InstantiateBlueprintRow(Blueprint blueprint)
+    /*private BlueprintRow InstantiateBlueprintRow(Blueprint blueprint)
     {
         var row = Instantiate(_blueprintRowPrefab, _blueprintContainer);
 
         // TODO: Инициализировать BlueprintRow
         
         return row;
-    }
+    }*/
 
     private void MoveToStar(Transform targetTransform)
     {
         _myTransform.localPosition = targetTransform.localPosition + _menuPositionOffset;
     }
 
-    private void SetBlueptintCollection(ObservableCollection<Blueprint> blueprints)
+    /*private void SetBlueptintCollection(ObservableCollection<Blueprint> blueprints)
     {
         blueprints.CollectionChanged += HandleChangeBlueprintList;
-        ReloadBlueprints(blueprints);
+        //ReloadBlueprints(blueprints);
     }
 
     private void RemoveBlueprintCollection(ObservableCollection<Blueprint> blueprints)
     {
         blueprints.CollectionChanged -= HandleChangeBlueprintList;
         ClearBlueprints();
-    }
+    }*/
 }

@@ -6,7 +6,7 @@ public class Star
     public readonly int Incom;
     public readonly string Name;
     public readonly ObservableCollection<Ship> Fleet = new ObservableCollection<Ship>();
-    public readonly ObservableCollection<Blueprint> Blueprints = new ObservableCollection<Blueprint>();
+    //public readonly ObservableCollection<Blueprint> Blueprints = new ObservableCollection<Blueprint>();
 
     public event Action<Team> OnCaptured;
 
