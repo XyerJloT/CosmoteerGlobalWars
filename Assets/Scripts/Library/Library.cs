@@ -23,9 +23,10 @@ namespace Assets.Scripts.Library
 
         public bool Add(IImmutableBlueprint blueprint)
         {
-            if (!_container.Add(Validate(blueprint))) return false;
+            var validated = Validate(blueprint);
+            if (!_container.Add(validated)) return false;
 
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, blueprint));
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, validated));
             return true;
         }
 
