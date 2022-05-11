@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -19,7 +18,7 @@ public class NumberField : MonoBehaviour, ISelectHandler
         get => _number;
         set
         {
-            // Если кто-то выбрал поле, то снимаем выделение
+            // Если вызывается из другого скрипта, то надо снять выделение
             if (_isSelected)
             {
                 EventSystem.current.SetSelectedGameObject(null);
@@ -57,6 +56,11 @@ public class NumberField : MonoBehaviour, ISelectHandler
         _input.onEndEdit.AddListener(EndEditHandler);
     }
 
+    private void OnDisable()
+    {
+        _input.onEndEdit.RemoveListener(EndEditHandler);
+    }
+
     private void Start()
     {
         // Инициализация значения из инспектора
@@ -68,21 +72,11 @@ public class NumberField : MonoBehaviour, ISelectHandler
         if (!Application.isPlaying) Number = _number;
     }
 
-    private void OnDisable()
-    {
-        _input.onEndEdit.RemoveListener(EndEditHandler);
-    }
-
-    private void EditorUpdate()
-    {
-        Number = _number;
-    }
-
     private void EndEditHandler(string value)
     {
         _isSelected = false;
-        Number = int.Parse(value);
-
+        Number = string.IsNullOrEmpty(value) ? 0 : int.Parse(value);
+        
         OnEndEdit?.Invoke(Number);
     }
 
