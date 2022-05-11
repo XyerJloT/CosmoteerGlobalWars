@@ -9,7 +9,6 @@ public class BattleSceneLoader : MonoBehaviour
 {
     [SerializeField] private LibraryView _libraryView;
 
-
     private LibrarySerializer _librarySerializer;
     private Library _library;
     private LibraryPresenter _presenter;
@@ -27,11 +26,9 @@ public class BattleSceneLoader : MonoBehaviour
         _librarySerializer = new LibrarySerializer(librarySaveFile, libraryFodler, new DefaultRankMatcher());
         _library = _librarySerializer.Load();
 
-        Debug.Log("Init library view");
         _libraryView.Init(new CachedImageSource());
         _libraryView.Comparer = new BlueprintComparer();
 
-        Debug.Log("Create presenter");
         _presenter = new LibraryPresenter(_library, _libraryView);
     }
 
@@ -47,7 +44,7 @@ public class BattleSceneLoader : MonoBehaviour
         {
             if (x == null && y == null)
             {
-                Debug.LogError("All is null!");
+                Debug.LogWarning("All is null!");
                 return 0;
             }
             if (x == null) return -1;
