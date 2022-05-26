@@ -2,6 +2,7 @@
 
 namespace Assets.Scripts.Map
 {
+    [RequireComponent(typeof(RectTransform))]
     public class TunnelView : MonoBehaviour
     {
         public void Init(Tunnel tunnel)
@@ -10,7 +11,8 @@ namespace Assets.Scripts.Map
             var to = tunnel.To.Position;
 
             var position = (from + to) / 2;
-            var angle = Vector2.Angle(from, to);
+            var angle = Vector2.Angle(Vector2.up, to - from);
+            var length = (to - from).magnitude;
 
             gameObject.transform.position = position;
             
@@ -18,7 +20,9 @@ namespace Assets.Scripts.Map
             rotation.z = angle;
             gameObject.transform.eulerAngles = rotation;
 
-            //TODO: растягивание тоннеля
+            var rectTransform = gameObject.GetComponent<RectTransform>();
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, length);
+            rectTransform.ForceUpdateRectTransforms();
         }
     }
 }
