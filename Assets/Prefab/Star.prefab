@@ -329,7 +329,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7006775524716077320}
-  - component: {fileID: 7006775524716077321}
+  - component: {fileID: 1945574463939486122}
   m_Layer: 5
   m_Name: Star
   m_TagString: Untagged
@@ -360,7 +360,7 @@ RectTransform:
   m_AnchoredPosition: {x: -208.2, y: 55.1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7006775524716077321
+--- !u!114 &1945574463939486122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7006775524716077323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44327707833e71b459a86a4b63abd7c3, type: 3}
+  m_Script: {fileID: 11500000, guid: f9e40b2f250dfe34cb50b4d781bd29dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _incom: 0
@@ -377,3 +377,6 @@ MonoBehaviour:
   _description: {fileID: 7006775524021713285}
   _stroke: {fileID: 7006775524169714215}
   _selection: {fileID: 7006775523836493919}
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
