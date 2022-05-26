@@ -1,3 +1,4 @@
+using Assets.Scripts.Map;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,16 +44,16 @@ public class Team
     {
         if (IsCaptered(star)) return;
         _captured.Add(star);
-        star.Capture(this);
+        star.TakeOver(this);
 
         Incom += star.Incom;
 
         // Подписываемся на событие когда кто-то захватит нашу звезду
-        star.OnCaptured += StarHandler;
+        star.OnOwnerChanged += StarHandler;
 
-        void StarHandler(Team invader)
+        void StarHandler(Team olwOwner, Team invader)
         {
-            star.OnCaptured -= StarHandler;
+            star.OnOwnerChanged -= StarHandler;
             _captured.Remove(star);
             Incom -= star.Incom;
         }

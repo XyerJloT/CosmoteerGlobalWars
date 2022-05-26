@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Assets.Scripts.Map;
 
 [RequireComponent(typeof(InflateAnimation), typeof(Transform))]
 public class StarMenu : MonoBehaviour
@@ -62,7 +63,7 @@ public class StarMenu : MonoBehaviour
 
     private IEnumerator OpenCoroutine(StarView target)
     {
-        _starName.text = target.Model.Name;
+        _starName.text = target.Showed.Name;
         //SetBlueptintCollection(target.Model.Blueprints);
 
         MoveToStar(target.transform);
