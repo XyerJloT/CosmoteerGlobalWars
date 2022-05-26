@@ -27,8 +27,8 @@ public class BattleSceneLoader : MonoBehaviour
         InitLibrary();
 
         Debug.Log("Load map...");
-        Debug.Log($"Map will be saved in '{_mapFile}'");
         _mapFile = Path.Combine(Application.persistentDataPath, "map.json");
+        Debug.Log($"Map will be saved in '{_mapFile}'");
         _map = LoadMap(_mapFile);
         _mapView.Init(_map);
     }
